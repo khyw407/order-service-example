@@ -4,9 +4,13 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		maven{
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1')
 	}
 }
 
@@ -14,8 +18,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
 
-group = 'com.test.springboot'
+group = 'com.microservices'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
@@ -24,10 +29,16 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-ext {
-	springCloudVersion = 'Edgware.RELEASE'
+bootJar {
+	baseName = 'app'
+	version = 'latest'
 }
 
+ext['springCloudVersion'] = 'Greenwich.M3'
+
+docker{
+	name "${project.group}/${bootJar.baseName}:${bootJar.version}"
+}
 
 dependencies {
 	implementation('org.springframework.cloud:spring-cloud-starter-config')
