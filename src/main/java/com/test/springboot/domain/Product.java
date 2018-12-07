@@ -1,4 +1,4 @@
-package domain;
+package com.test.springboot.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

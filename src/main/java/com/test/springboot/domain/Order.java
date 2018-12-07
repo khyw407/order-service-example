@@ -1,4 +1,4 @@
-package domain;
+package com.test.springboot.domain;
 
 import java.util.List;
 

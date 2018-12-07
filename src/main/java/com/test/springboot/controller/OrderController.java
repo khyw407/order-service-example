@@ -1,4 +1,4 @@
-package controller;
+package com.test.springboot.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.Account;
-import domain.Customer;
-import domain.Order;
-import domain.OrderStatus;
-import domain.Product;
-import feignclient.AccountClient;
-import feignclient.CustomerClient;
-import feignclient.ProductClient;
-import repository.OrderRepository;
+import com.test.springboot.domain.Account;
+import com.test.springboot.domain.Customer;
+import com.test.springboot.domain.Order;
+import com.test.springboot.domain.OrderStatus;
+import com.test.springboot.domain.Product;
+import com.test.springboot.feignclient.AccountClient;
+import com.test.springboot.feignclient.CustomerClient;
+import com.test.springboot.feignclient.ProductClient;
+import com.test.springboot.repository.OrderRepository;
 
 @RestController
 public class OrderController {
