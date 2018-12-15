@@ -3,7 +3,6 @@ package com.test.springboot.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.test.springboot.domain.Order;
@@ -13,6 +12,8 @@ public class OrderRepository {
 	private List<Order> orders = new ArrayList<>();
 	
 	public Order add(Order order) {
+		order.setId((long) (orders.size() + 1));
+		orders.add(order);
 		return order;
 	}
 	
