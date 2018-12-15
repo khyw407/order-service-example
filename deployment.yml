@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: order-service
+spec:
+  type: ClusterIP
+  selector:
+    app: spring-cloud-order-service
+  ports:
+  - protocol: TCP
+    port: 8090
+    targetPort: 8090
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spring-cloud-order-service
+  labels:
+    app: spring-cloud-order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-cloud-order-service
+  template:
+    metadata:
+      labels:
+        app: spring-cloud-order-service
+        version: latest
+    spec:
+      containers:
+      - name: spring-cloud-order-service
+        image: 192.168.0.8:5000/order-service:latest
+        ports:
+        - name: http
+          containerPort: 8090

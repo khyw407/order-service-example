@@ -22,7 +22,7 @@ node {
     }
     
     stage('Build Docker Image') {
-        buildImage = docker.build("customer-service:latest")
+        buildImage = docker.build("order-service:latest")
     }
     
     stage('Archive') {
