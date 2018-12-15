@@ -2,7 +2,7 @@ package com.test.springboot.feignclient;
 
 import java.util.List;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.test.springboot.domain.Product;
