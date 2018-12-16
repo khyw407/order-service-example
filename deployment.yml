@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: order-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: spring-cloud-order-service
   ports:
