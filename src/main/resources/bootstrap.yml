@@ -7,4 +7,4 @@ spring:
   cloud:
     config:
       uri:
-      - http://hyunwoo-kim.iptime.org:32000
+      - configuration.development.svc.cluster.local:8888
