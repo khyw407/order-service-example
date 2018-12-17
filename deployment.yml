@@ -1,3 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: order-service
+spec:
+  rules:
+  - host: order-service.192.168.0.9.nip.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: order-service
+          servicePort: 32617
+---
 kind: Service
 apiVersion: v1
 metadata:
