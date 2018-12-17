@@ -15,10 +15,10 @@ import com.test.springboot.domain.Customer;
 import com.test.springboot.domain.Order;
 import com.test.springboot.domain.OrderStatus;
 import com.test.springboot.domain.Product;
-import com.test.springboot.feignclient.AccountClient;
-import com.test.springboot.feignclient.CustomerClient;
-import com.test.springboot.feignclient.ProductClient;
 import com.test.springboot.repository.OrderRepository;
+import com.test.springboot.service.AccountService;
+import com.test.springboot.service.CustomerService;
+import com.test.springboot.service.ProductService;
 
 @RestController
 public class OrderController {
@@ -27,20 +27,20 @@ public class OrderController {
 	OrderRepository repository;
 	
 	@Autowired
-	AccountClient accountClient;
+	AccountService accountService;
 	
 	@Autowired
-	CustomerClient customerClient;
+	CustomerService customerService;
 	
 	@Autowired
-	ProductClient productClient;
+	ProductService productService;
 	
 	@PostMapping
 	public Order prepare(@RequestBody Order order) {
 		int price = 0;
 		
-		List<Product> products = productClient.findByIds(order.getProductIds());
-		Customer customer = customerClient.findByIdWithAccounts(order.getCustomerId());
+		List<Product> products = productService.findProductsByIds(order.getProductIds());
+		Customer customer = customerService.findCustomerWithAccounts(order.getCustomerId());
 		
 		for(Product product : products) {
 			price += product.getPrice();
@@ -63,10 +63,10 @@ public class OrderController {
 	}
 	
 	@PutMapping("/{id}")
-	public Order accept(@PathVariable Long id) throws Exception{
+	public Order accept(@PathVariable Long id){
 		Order order = repository.findById(id);
 		
-		accountClient.withdraw(order.getAccountId(), order.getPrice());
+		accountService.withdraw(order.getAccountId(), order.getPrice());
 		order.setStatus(OrderStatus.DONE);
 		repository.update(order);
 		
@@ -75,6 +75,11 @@ public class OrderController {
 	
 	public int priceDiscount(int price, Customer customer) {
 		double discount = 0;
+		int ordersNum = repository.countByCustomerId(customer.getId());
+		
+		if (ordersNum > 10) {
+			ordersNum = 10;
+		}
 		
 		switch(customer.getType()) {
 		case REGULAR:
@@ -86,6 +91,8 @@ public class OrderController {
 		default:
 			break;
 		}
+		
+		discount += (ordersNum * 0.01);
 		
 		return (int)(price - (price * discount));
 	}
