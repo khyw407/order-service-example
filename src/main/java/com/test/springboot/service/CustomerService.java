@@ -30,7 +30,7 @@ public class CustomerService {
 		}
 	)
 	public Customer findCustomerWithAccounts(Long customerId) {
-		Customer customer = restTemplate.getForObject("zuul.192.168.0.9.nip.io:32001/api/customer/withAccounts/{id}", Customer.class, customerId);
+		Customer customer = restTemplate.getForObject("http://zuul.192.168.0.9.nip.io:32001/api/customer/withAccounts/{id}", Customer.class, customerId);
 		return customer;
 	}
 	

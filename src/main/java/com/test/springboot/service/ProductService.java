@@ -30,7 +30,7 @@ public class ProductService {
 		@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000")
 	})
 	public List<Product> findProductsByIds(List<Long> ids) {
-		Product[] products = restTemplate.postForObject("zuul.192.168.0.9.nip.io:32001/api/product/ids", ids, Product[].class);
+		Product[] products = restTemplate.postForObject("http://zuul.192.168.0.9.nip.io:32001/api/product/ids", ids, Product[].class);
 		return Arrays.stream(products).collect(Collectors.toList());
 	}
 }

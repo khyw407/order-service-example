@@ -21,6 +21,6 @@ public class AccountService {
 		@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000")
 	})
 	public void withdraw(Long accountId, int price) {
-		restTemplate.put("zuul.192.168.0.9.nip.io:32001/api/account/withdraw/{id}/{amount}", null, accountId, price);
+		restTemplate.put("http://zuul.192.168.0.9.nip.io:32001/api/account/withdraw/{id}/{amount}", null, accountId, price);
 	}
 }
