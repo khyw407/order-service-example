@@ -10,6 +10,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.test.springboot.repository.OrderRepository;
 
@@ -37,5 +38,15 @@ public class OrderServiceApplication {
 	@Bean
 	OrderRepository repository() {
 		return new OrderRepository();
+	}
+	
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+	    CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+	    loggingFilter.setIncludePayload(true);
+	    loggingFilter.setIncludeHeaders(true);
+	    loggingFilter.setMaxPayloadLength(1000);
+	    loggingFilter.setAfterMessagePrefix("REQ:");
+	    return loggingFilter;
 	}
 }
