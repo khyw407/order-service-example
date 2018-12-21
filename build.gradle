@@ -48,6 +48,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
 	compile('net.logstash.logback:logstash-logback-encoder:4.11')
+	compile('org.springframework.boot:spring-boot-starter-amqp')
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
