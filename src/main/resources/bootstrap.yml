@@ -8,6 +8,14 @@ spring:
     config:
       uri:
       - http://configuration.development.svc.cluster.local:8888
+  zipkin:
+    discovery-client-enabled: false
+    baseUrl: http://zipkin.192.168.0.9.nip.io:32006/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1.0
   rabbitmq:
     listener:
         direct:
