@@ -49,7 +49,7 @@ public class OrderController {
 	@Autowired
 	OrderSender orderSender;
 	
-	@PostMapping
+	@PostMapping("/prepare")
 	public Order prepare(@RequestBody Order order) throws JsonProcessingException{
 		int price = 0;
 		
