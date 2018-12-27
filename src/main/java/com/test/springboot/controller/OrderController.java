@@ -24,6 +24,7 @@ import com.test.springboot.domain.Product;
 import com.test.springboot.repository.OrderRepository;
 import com.test.springboot.service.AccountService;
 import com.test.springboot.service.CustomerService;
+import com.test.springboot.service.OrderSender;
 import com.test.springboot.service.ProductService;
 
 @RestController
@@ -44,6 +45,9 @@ public class OrderController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	OrderSender orderSender;
 	
 	@PostMapping
 	public Order prepare(@RequestBody Order order) throws JsonProcessingException{
@@ -122,5 +126,16 @@ public class OrderController {
 		discount += (ordersNum * 0.01);
 		
 		return (int)(price - (price * discount));
+	}
+	
+	@PostMapping
+	public Order process(@RequestBody Order order) throws JsonProcessingException{
+		Order rtnOrder = repository.add(order);
+		LOGGER.info("Order saved: {}", mapper.writeValueAsString(order));
+		
+		boolean isSent = orderSender.send(rtnOrder);
+		LOGGER.info("Order sent: {}", mapper.writeValueAsString(Collections.singletonMap("isSent", isSent)));
+		
+		return rtnOrder;
 	}
 }
